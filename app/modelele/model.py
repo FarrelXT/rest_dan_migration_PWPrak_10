@@ -1,5 +1,6 @@
-from app import db
+from app.modelele import db
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Users(db.Model):
     id = db.Column(db.BigInteger, primary_key=True,autoincrement=True)
@@ -9,19 +10,20 @@ class Users(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
-    def __repr__(self):
-        return f'<User {self.name}>'
-    
-class todos(db.Model):
-    id = db.Column(db.BigInteger, primary_key=True,autoincrement=True)
-    todo = db.Column(db.String(230), nullable=False)
-    description = db.Column(db.String(230), nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    user_id = db.Column(db.BigInteger, db.ForeignKey('users.id'), nullable=False)
+    def setpassword(self, password):
+        self.password = generate_password_hash(password)
 
+    def checkpass(self, password):
+        return check_password_hash(self.password, password)
+
+    # def __repr__(self):
+    #     return f'<User {self.name}>'
+    # DIRUBAH MENJADI ==> 
     def __repr__(self):
-        return f'<Todo {self.todo}>'
+        return '<User {}>'.format(self.name)
+
+
+#PERPINDAHAN LINE CODE KE FILE ===> (todos_modelele.py)
 
 class product(db.Model):
     id = db.Column(db.BigInteger, primary_key=True,autoincrement=True)
@@ -33,6 +35,7 @@ class product(db.Model):
     def __repr__(self):
         return f'<Product {self.product}>'
     
+
 class katergori_product(db.Model):
     id = db.Column(db.BigInteger, primary_key=True,autoincrement=True)
     product_id = db.Column(db.BigInteger, db.ForeignKey('product.id'), nullable=False)
