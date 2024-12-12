@@ -47,3 +47,22 @@ def product_detail(id):
         return ProductController.update(id)
     else:
         return ProductController.delete(id)
+    
+
+from app.controller import KategoriController
+
+@app.route('/categories', methods=['POST', 'GET'])
+def categories():
+    if request.method == 'GET':
+        return KategoriController.index()
+    else:
+        return KategoriController.store()
+
+@app.route('/categories/<id>', methods=['GET', 'PUT', 'DELETE'])
+def category_detail(id):
+    if request.method == 'GET':
+        return KategoriController.show(id)
+    elif request.method == 'PUT':
+        return KategoriController.update(id)
+    else:
+        return KategoriController.delete(id)

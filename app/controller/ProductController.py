@@ -1,4 +1,4 @@
-from app.modelele.model import product, katergori_product
+from app.modelele.model import product
 from app import response
 from flask import request
 from app.modelele import db

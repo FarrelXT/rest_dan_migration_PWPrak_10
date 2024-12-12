@@ -20,7 +20,9 @@ def transform(users):
         array.append({
             'id' : a.id,
             'name': a.name,
-            'email': a.email
+            'email': a.email,
+            'created_at': a.created_at,
+            'updated_at': a.updated_at
         })
     return array 
      
@@ -41,7 +43,9 @@ def singleTransform(user):
     data = {
         'id': user.id,
         'name': user.name,
-        'email': user.email
+        'email': user.email,
+        'created_at': user.created_at,
+        'updated_at': user.updated_at
     }
     return data
 
