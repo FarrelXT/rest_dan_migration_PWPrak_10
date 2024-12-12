@@ -45,16 +45,41 @@ def singleTransform(user):
     }
     return data
 
-
-
-def store():
+def update(id):
     try:
-        id = request.json['id']
         name = request.json['name']
         email = request.json['email']
         password = request.json['password']
 
-        users = Users(id=id ,name=name, email=email)
+        users = Users.query.filter_by(id=id).first()
+        users.name = name
+        users.email = email
+        users.setpassword(password)
+
+        db.session.commit()
+        return response.ok('', 'berasil update')
+    except Exception as e:
+        print(e)
+
+def delete(id):
+    try :
+        users = Users.query.filter_by(id=id).first()
+        if not users:
+            return response.badRequest([], 'Data Tidak Ditemukan')
+        db.session.delete(users)        
+        db.session.commit()
+
+        return response.ok('', 'Berhasil hapus data')
+    except Exception as e:
+        print(e)
+
+def store():
+    try:
+        name = request.json['name']
+        email = request.json['email']
+        password = request.json['password']
+
+        users = Users(name=name, email=email)
         users.setpassword(password)
         db.session.add(users)
         db.session.commit()
